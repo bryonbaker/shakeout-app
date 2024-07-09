@@ -44,7 +44,7 @@ func logRequest() {
 	defer file.Close()
 
 	// Write the current date and time to the log file
-	logEntry := fmt.Sprintf("Request received at: %s\n", time.Now().Format(time.RFC3339))
+	logEntry := fmt.Sprintf("Request received at: %s\n", time.Now().Format("2006-01-02T15:04:05.000Z07:00"))
 	if _, err := file.WriteString(logEntry); err != nil {
 		fmt.Printf("Error writing to log file: %s\n", err)
 	}
