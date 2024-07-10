@@ -43,8 +43,14 @@ func logRequest() {
 	}
 	defer file.Close()
 
+	// Get the pod name from the environment variable
+	podName := os.Getenv("POD_NAME")
+	if podName == "" {
+		podName = "unknown"
+	}
+
 	// Write the current date and time to the log file
-	logEntry := fmt.Sprintf("Request received at: %s\n", time.Now().Format("2006-01-02T15:04:05.000Z07:00"))
+	logEntry := fmt.Sprintf("Request received at: %s. Processed by pod: %s\n", time.Now().Format("2006-01-02T15:04:05.000Z07:00"), podName)
 	if _, err := file.WriteString(logEntry); err != nil {
 		fmt.Printf("Error writing to log file: %s\n", err)
 	}

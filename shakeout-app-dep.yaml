@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: shakeout-app
-        image: quay.io/bryonbaker/shakeout-app:v1.2
+        image: quay.io/bryonbaker/shakeout-app:v1.3
         imagePullPolicy: Always
         ports:
         - containerPort: 9000
@@ -24,6 +24,11 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: shakeout-app-storage
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
       volumes:
       - name: shakeout-app-storage
         persistentVolumeClaim:
