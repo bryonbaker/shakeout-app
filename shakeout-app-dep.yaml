@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: shakeout-app
-        image: quay.io/bryonbaker/shakeout-app:latest
+        image: quay.io/bryonbaker/shakeout-app:v1.2
         imagePullPolicy: Always
         ports:
         - containerPort: 9000
@@ -43,7 +43,7 @@ spec:
   resources:
     requests:
       storage: 20Mi
-  storageClassName: lvg
+  storageClassName: lvms-vg1
 
 ---
 apiVersion: v1
@@ -57,7 +57,7 @@ spec:
     app: shakeout-app
   ports:
   - protocol: TCP
-    port: 80
+    port: 9000
     targetPort: 9000
 
 ---
@@ -72,5 +72,5 @@ spec:
     kind: Service
     name: shakeout-app-service
   port:
-    targetPort: 80
+    targetPort: 9000
   wildcardPolicy: None
