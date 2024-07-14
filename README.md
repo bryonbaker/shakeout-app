@@ -1,3 +1,31 @@
 # Overview
 
 This is a simple shakeout app to test routes and use of persistent volumes on Single Node OpenShift.
+
+# Maintaining the base image patch level
+
+I don't promise to kee this patched on the latest RHEL UBI. So to make this your own you need to maintain two specific files.
+
+**Makefile:**  
+
+Update this file to generate the image using the correct name and tag.
+```
+IMAGE_NAME := quay.io/bryonbaker/shakeout-app
+TAG := latest
+```
+
+**shakeout-app-dep.yaml**
+
+Update this file to use your image from your registry.
+```
+    spec:
+      containers:
+      - name: shakeout-app
+        image: quay.io/bryonbaker/shakeout-app:v1.3
+```
+
+# Building the Image
+To build this yourself run:  
+```make clean``` to clean up any local image.  
+```make build``` to build the new image.   
+```make push``` to push the image to the target registry.   
