@@ -4,7 +4,7 @@ This is a simple shakeout app to test routes and use of persistent volumes on Si
 
 # Maintaining the base image patch level
 
-I don't promise to kee this patched on the latest RHEL UBI. So to make this your own you need to maintain two specific files.
+I don't promise to keep this patched on the latest RHEL UBI. So to make this your own you need to maintain two specific files.
 
 **Makefile:**  
 
@@ -21,7 +21,7 @@ Update this file to use your image from your registry.
     spec:
       containers:
       - name: shakeout-app
-        image: quay.io/bryonbaker/shakeout-app:v1.3
+        image: quay.io/bryonbaker/shakeout-app:latest
 ```
 
 # Building the Image
