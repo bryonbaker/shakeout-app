@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: shakeout-app
-        image: quay.io/bryonbaker/shakeout-app:v1.3
+        image: quay.io/bryonbaker/shakeout-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 9000
