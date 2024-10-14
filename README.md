@@ -2,6 +2,22 @@
 
 This is a simple shakeout app to test routes and use of persistent volumes on Single Node OpenShift.
 
+# Running on OpenSHift
+
+Deploy the app with `oc apply -f shakeout-app-dep.yaml`
+
+Then find the route and open  the route in a browser with the path `hello`.
+
+E.g. 
+```
+$ oc get routes
+NAME                 HOST/PORT                                                 PATH   SERVICES               PORT   TERMINATION   WILDCARD
+shakeout-app-route   shakeout-app-route-shakeout.apps.kmarthub.bakerapps.net          shakeout-app-service   9000                 None
+```
+
+Then navigate to `http://shakeout-app-route-shakeout.apps.kmarthub.bakerapps.net/hello`
+
+
 # Maintaining the base image patch level
 
 I don't promise to keep this patched on the latest RHEL UBI. So to make this your own you need to maintain two specific files.
