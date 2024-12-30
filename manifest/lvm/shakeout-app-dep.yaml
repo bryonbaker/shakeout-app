@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shakeout-app
+  labels:
+    app: shakeout-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shakeout-app
+  template:
+    metadata:
+      labels:
+        app: shakeout-app
+    spec:
+      containers:
+      - name: shakeout-app
+        image: quay.io/bryonbaker/shakeout-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9000
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data
+          name: shakeout-app-storage
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+      volumes:
+      - name: shakeout-app-storage
+        persistentVolumeClaim:
+          claimName: shakeout-app-pvc
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shakeout-app-pvc
+  labels:
+    app: shakeout-app
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Mi
+  storageClassName: lvm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shakeout-app-service
+  labels:
+    app: shakeout-app
+spec:
+  selector:
+    app: shakeout-app
+  ports:
+  - protocol: TCP
+    port: 9000
+    targetPort: 9000
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: shakeout-app-route
+  labels:
+    app: shakeout-app
+spec:
+  path: /hello
+  to:
+    kind: Service
+    name: shakeout-app-service
+    weight: 100
+  port:
+    targetPort: 9000
+  tls:
+    termination: edge
+  wildcardPolicy: None
